@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Key Expired</title>
+</head>
+<body style="text-align: center; padding-top: 50px;">
+	<h1 style="color: red;">Key Expired</h1>
+	<p style="font-size: 20px;">Please contact customer support for assistance.</p>
+</body>
+</html>

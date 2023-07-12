@@ -1,0 +1,332 @@
+[
+  {
+    "marc": [
+      "0",
+      "bathroom"
+    ],
+    "mikiya": [
+      "0",
+      "doorway"
+    ],
+    "niclas": [
+      "0",
+      "kitchen"
+    ],
+    "week": 0
+  },
+  {
+    "marc": [
+      "01-12-2023",
+      "kitchen"
+    ],
+    "mikiya": [
+      "01-13-2023",
+      "bathroom"
+    ],
+    "niclas": [
+      "01-09-2023",
+      "doorway"
+    ],
+    "week": 1
+  },
+  {
+    "marc": [
+      "0",
+      "doorway"
+    ],
+    "mikiya": [
+      "0",
+      "kitchen"
+    ],
+    "niclas": [
+      "01-20-2023",
+      "kitchen"
+    ],
+    "week": 2
+  },
+  {
+    "marc": [
+      "0",
+      "kitchen"
+    ],
+    "mikiya": [
+      "01-29-2023",
+      "bathroom"
+    ],
+    "niclas": [
+      "0",
+      "doorway"
+    ],
+    "week": 3
+  },
+  {
+    "marc": [
+      "01-30-2023",
+      "kitchen"
+    ],
+    "mikiya": [
+      "0",
+      "bathroom"
+    ],
+    "niclas": [
+      "02-03-2023",
+      "bathroom"
+    ],
+    "week": 4
+  },
+  {
+    "marc": [
+      "0",
+      "bathroom"
+    ],
+    "mikiya": [
+      "02-12-2023",
+      "doorway"
+    ],
+    "niclas": [
+      "0",
+      "kitchen"
+    ],
+    "week": 6
+  },
+  {
+    "marc": [
+      "0",
+      "kitchen"
+    ],
+    "mikiya": [
+      "0",
+      "bathroom"
+    ],
+    "niclas": [
+      "02-19-2023",
+      "doorway"
+    ],
+    "week": 7
+  },
+  {
+    "marc": [
+      "03-07-2023",
+      "bathroom"
+    ],
+    "mikiya": [
+      "03-08-2023",
+      "doorway"
+    ],
+    "niclas": [
+      "03-06-2023",
+      "kitchen"
+    ],
+    "week": 9
+  },
+  {
+    "marc": [
+      "0",
+      "doorway"
+    ],
+    "mikiya": [
+      "0",
+      "kitchen"
+    ],
+    "niclas": [
+      "03-20-2023",
+      "bathroom"
+    ],
+    "week": 11
+  },
+  {
+    "marc": [
+      "0",
+      "doorway"
+    ],
+    "mikiya": [
+      "0",
+      "kitchen"
+    ],
+    "niclas": [
+      "03-28-2023",
+      "kitchen"
+    ],
+    "week": 12
+  },
+  {
+    "marc": [
+      "04-05-2023",
+      "kitchen"
+    ],
+    "mikiya": [
+      "0",
+      "bathroom"
+    ],
+    "niclas": [
+      "0",
+      "doorway"
+    ],
+    "week": 13
+  },
+  {
+    "marc": [
+      "0",
+      "doorway"
+    ],
+    "mikiya": [
+      "04-13-2023",
+      "kitchen"
+    ],
+    "niclas": [
+      "04-12-2023",
+      "bathroom"
+    ],
+    "week": 14
+  },
+  {
+    "marc": [
+      "0",
+      "kitchen"
+    ],
+    "mikiya": [
+      "0",
+      "bathroom"
+    ],
+    "niclas": [
+      "04-27-2023",
+      "doorway"
+    ],
+    "week": 16
+  },
+  {
+    "marc": [
+      "05-06-2023",
+      "kitchen"
+    ],
+    "mikiya": [
+      "0",
+      "lol"
+    ],
+    "niclas": [
+      "0",
+      "lol"
+    ],
+    "week": 17
+  },
+  {
+    "marc": [
+      "0",
+      "lol"
+    ],
+    "mikiya": [
+      "0",
+      "lol"
+    ],
+    "niclas": [
+      "05-11-2023",
+      "bathroom"
+    ],
+    "week": 18
+  },
+  {
+    "marc": [
+      "0",
+      "doorway"
+    ],
+    "mikiya": [
+      "0",
+      "kitchen"
+    ],
+    "niclas": [
+      "05-24-2023",
+      "bathroom"
+    ],
+    "week": 20
+  },
+  {
+    "marc": [
+      "0",
+      "bathroom"
+    ],
+    "mikiya": [
+      "0",
+      "doorway"
+    ],
+    "niclas": [
+      "05-30-2023",
+      "kitchen"
+    ],
+    "week": 21
+  },
+  {
+    "marc": [
+      "06-05-2023",
+      "kitchen"
+    ],
+    "mikiya": [
+      "06-04-2023",
+      "bathroom"
+    ],
+    "niclas": [
+      "0",
+      "doorway"
+    ],
+    "week": 22
+  },
+  {
+    "marc": [
+      "0",
+      "doorway"
+    ],
+    "mikiya": [
+      "0",
+      "kitchen"
+    ],
+    "niclas": [
+      "06-15-2023",
+      "bathroom"
+    ],
+    "week": 23
+  },
+  {
+    "marc": [
+      "0",
+      "lol"
+    ],
+    "mikiya": [
+      "06-18-2023",
+      "kitchen"
+    ],
+    "niclas": [
+      "0",
+      "lol"
+    ],
+    "week": 24
+  },
+  {
+    "marc": [
+      "0",
+      "kitchen"
+    ],
+    "mikiya": [
+      "07-01-2023",
+      "bathroom"
+    ],
+    "niclas": [
+      "06-29-2023",
+      "doorway"
+    ],
+    "week": 25
+  },
+  {
+    "marc": [
+      "0",
+      "lol"
+    ],
+    "mikiya": [
+      "0",
+      "lol"
+    ],
+    "niclas": [
+      "07-12-2023",
+      "doorway"
+    ],
+    "week": 27
+  }
+]

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Excuse from Chore Duty</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f0f0f0;
+		}
+		form {
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px #ccc;
+			margin: 50px auto;
+			max-width: 600px;
+		}
+		label {
+			display: block;
+			font-size: 18px;
+			margin-bottom: 10px;
+		}
+		input[type="submit"] {
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 18px;
+			margin-top: 20px;
+		}
+		input[type="submit"]:hover {
+			background-color: #3e8e41;
+		}
+		textarea {
+			font-size: 18px;
+			padding: 10px;
+			border-radius: 5px;
+			border: 2px solid #ccc;
+			width: 100%;
+			min-height: 150px;
+			resize: vertical;
+		}
+	</style>
+</head>
+<body>
+	<form action="/post_excuse" method="post" style="font-family: Arial, sans-serif; background-color: #f0f0f0; padding: 20px; margin: 50px auto; max-width: 600px; border-radius: 10px; box-shadow: 0 0 10px #ccc;">
+		<label style="display: block; font-size: 18px; margin-bottom: 10px;">Entschuldigung:</label>
+		<input type="text" name= "excuse" style="font-size: 18px; padding: 10px; border-radius: 5px; border: 2px solid #ccc; width: 100%; height: 150px; resize: vertical; box-sizing: border-box;"></textarea>
+        <input type="hidden" name="key" value="{{key}}">
+		<input type="hidden" name="who" value="{{who}}">
+		<input type="submit" value="Abschicken" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 18px; margin-top: 20px;">
+	</form>
+</body>
+</html>
