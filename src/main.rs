@@ -548,8 +548,6 @@ fn options5_handler() -> Status {
             replacing: to_address.to_str().to_string(),
             key: key
         };
-        //use std::fs::{File, OpenOptions};
-        //let new_contents = serde_json::to_string_pretty(&pending_request).expect("Error serializing tables");
         //read local json into string
         let contents = fs::read_to_string("private/pending.json").expect("Error reading file");
         //read local json into vector of Table
@@ -557,30 +555,8 @@ fn options5_handler() -> Status {
         pending_tables_from_json.push(pending_request);
         let new_contents = serde_json::to_string_pretty(&pending_tables_from_json).expect("Error serializing tables");
         fs::write("private/pending.json", new_contents).expect("Error writing to file");
- //       let file = OpenOptions::new().append(true).create(true).open("private/pending.json");
-/*         match file{
-            Ok(mut file)=>{
-                match file.write_all(new_contents.as_bytes()){
-                    Ok(b)=>{println!("success appending pending list" )}
-                    Err(error)=>{
-                        println!("{:#?}",error);
-                        match  File::create("private/pending.json"){
-                            Ok(mut file)=>{
-                                match file.write_all(new_contents.as_bytes()){
-                                    Ok(b)=>{println!("success appending pending list" )}
-                                    Err(error)=>{println!("{:#?}",error);}
-                                }
-                            }
-                            Err(error)=>{println!("{:#?}",error);}
-                        }
-                    }
-                }
-            }
-            Err(error)=>{println!("{:#?}",error);}
-        } */
-        //spawn notification thing here 
-        //notificationservice::lol(EMAILOFNICLAS.to_string(), "for_whom".to_string(), "when".to_string(), "what".to_string(), format!("{}/affirm_3L/{}","ADDRESSOFSELF","key").to_string()); 
-        notificationservice::lol(EMAILOFNICLAS.to_string(), for_whom.to_string(), when.to_string(), what.to_string(), format!("{}/affirm_3L/{}",ADDRESSOFSELF,key).to_string()); 
+
+        notificationservice::lol(to_address.email().to_string(), for_whom.to_string(), when.to_string(), what.to_string(), format!("{}/affirm_3L/{}",ADDRESSOFSELF,key).to_string()); 
         Status::Ok
         }
         
