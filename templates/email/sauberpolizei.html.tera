@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Erinnerung: Aufgabe zu erledigen</title>
+    <style type="text/css">
+        /* Font families */
+        body { font-family: Arial, sans-serif; }
+        h1 { font-family: Georgia, serif; }
+        
+        /* Text styling */
+        p { font-size: 16px; line-height: 1.5; }
+        a { color: #0000ff; text-decoration: underline; }
+        
+        /* Layout */
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { margin-top: 0; }
+        .logo { text-align: center; margin-bottom: 30px; }
+        .logo img { max-width: 200px; height: auto; }
+        .reminder { background-color: #f2f2f2; padding: 20px; margin-bottom: 20px; }
+        .reminder h2 { margin-top: 0; }
+        .reminder p { margin-top: 0; }
+        .footer { text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Erinnerung: Aufgabe zu erledigen</h1>
+            <a class="logo" href="http://haushaltsserver.ddns.net"><img src="http://haushaltsserver.ddns.net/Haushaltsserver.png" alt="Haushaltsserver"></a>
+        </div>
+        <div class="reminder">
+            <h2>Nur noch {{Daysremaining}} Tage bis zum Ablauf des Zeitraums</h2>
+            <p>Liebe(r) {{who}},</p>
+            <p>Wir möchten Sie daran erinnern, dass es nur noch {{Daysremaining}} Tage bis zum Ablauf des vorgesehenen Zeitraums für ihren dieszweiwöchigen Beitrag sind.</p>
+            <p>Denken Sie daran, dass es wichtig ist, Ihre Aufgaben regelmäßig zu erledigen, um ein sauberes und organisiertes Zuhause zu gewährleisten. Indem Sie Ihre Aufgaben rechtzeitig erledigen, können Sie sicherstellen, dass Ihr Wohnraum für Sie und Ihre Lieben immer eine komfortable und einladende Umgebung bleibt.</p>
+            <p>Hier ist eine kurze Erinnerung an die anstehende Aufgabe:</p>
+            <ul>
+                <li>Bereich:{{task}}: Fällig in {{Daysremaining}} Tagen</li>
+            </ul>
+            <p>Vielen Dank, dass Sie sich Zeit genommen haben, um Ihre Aufgaben zu priorisieren und Ihr Zuhause in bestem Zustand zu halten. Wenn Sie Fragen oder Bedenken haben, zögern Sie bitte nicht, uns zu kontaktieren.</p>
+            <p>Falls sie derzeit für 4 oder mehr Tage nicht zu Hause sind, brauchen sie ihrer Aufgabe natürlich nicht nachkommen. Schreiben Sie ihre Mitbewohner an um eine Notiz auf dem Server zu hinterlassen</p>
+            <p>Hier ist ihre bisherige Bilanz in Wochennummern</p>
+            <ul>
+                <li>aktiv: {{active}}</li>
+                <li>damit gecovered: {{covered}}</li>
+                <li>versäumt: {{missing}}</li>
+            </ul>
+            <p>als zusätzlichen Anreiz erheben wir 3Euro Gebühr pro versäumte Woche </p>
+            <p>das Geld wird zu einem zu bestimmenden Zeitpunkt auf das Gemeinschaftskonto überwiesen </p>
+            <p>Es fallen keine Gebühren an wenn sie im Urlaub sind und das ihren Mtbewohnern mitteilen </p>
+        </div>
+        <div class="footer">
+            <p>Vielen Dank,</p>
+            <p>ChatGPT und die 3Löwen WG</p>
+        </div>
+    </div>
+</body>
+</html>

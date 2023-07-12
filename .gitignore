@@ -1,0 +1,5 @@
+target/
+*.sh
+.DS_Store
+*.db
+sqlite.*
