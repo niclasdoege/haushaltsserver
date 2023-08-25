@@ -339,7 +339,7 @@ fn dringlichkeitsbenachrichtigung(who: WhichAdmin, days_remaining:i64, covered:S
 
 pub fn lol(addressee: String, whodidit: String, when: String, what: String, magiclink: String) {
         //tracing_subscriber::fmt::init();
-        //let to_address = "email2_censor_placeholder, mbasjp@gmail.com, email3_censor_placeholder";
+        //let to_address = "marc.zweigle@gmail.com, mbasjp@gmail.com, email3_censor_placeholder";
         let to_address = addressee;
         let subject = format!("{} {} {}", what, when, whodidit);
         let mailboxes: Mailboxes = to_address.parse().unwrap();
@@ -392,7 +392,7 @@ pub fn lol(addressee: String, whodidit: String, when: String, what: String, magi
 pub async fn lol(addressee: &str, whodidit: &str, when: &str, what: &str, magiclink: &str) {
     
     tracing_subscriber::fmt::init();
-    //let to_address = "email2_censor_placeholder, mbasjp@gmail.com, email3_censor_placeholder";
+    //let to_address = "marc.zweigle@gmail.com, mbasjp@gmail.com, email3_censor_placeholder";
     let to_address = addressee;
     let subject = format!("{} {} {}", what, when, whodidit);
     let mailboxes: Mailboxes = to_address.parse().unwrap();
@@ -443,8 +443,8 @@ pub async fn lol(addressee: &str, whodidit: &str, when: &str, what: &str, magicl
 
 /* pub fn lol() {
     tracing_subscriber::fmt::init();
-    let to_address = "email2_censor_placeholder, mbasjp@gmail.com, email3_censor_placeholder";
-    //"[email3_censor_placeholder](mailto:email3_censor_placeholder); [mbasjp@gmail.com](mailto:mbasjp@gmail.com); [email2_censor_placeholder](mailto:email2_censor_placeholder)";
+    let to_address = "marc.zweigle@gmail.com, mbasjp@gmail.com, email3_censor_placeholder";
+    //"[email3_censor_placeholder](mailto:email3_censor_placeholder); [mbasjp@gmail.com](mailto:mbasjp@gmail.com); [marc.zweigle@gmail.com](mailto:marc.zweigle@gmail.com)";
     let mailboxes: Mailboxes = to_address.parse().unwrap();
     let to_header: header::To = mailboxes.into();
     let mail_body = MaybeString::String("Be happy!".into());
