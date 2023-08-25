@@ -50,6 +50,7 @@
             <p>als zusätzlichen Anreiz erheben wir 3Euro Gebühr pro versäumte Woche </p>
             <p>das Geld wird zu einem zu bestimmenden Zeitpunkt auf das Gemeinschaftskonto überwiesen </p>
             <p>Es fallen keine Gebühren an wenn sie im Urlaub sind und das ihren Mtbewohnern mitteilen </p>
+            <a href="{{Excusekeylink}}">klicken Sie hier wenn sich Entschuldigen möchten vom sauber machen</a>
         </div>
         <div class="footer">
             <p>Vielen Dank,</p>
