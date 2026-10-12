@@ -1,123 +1,58 @@
-<!-- Project presentation -->
 <p align="center">
-  <img src="docs/assets/hero.svg" alt="Haushaltsserver — a shared home, a clearer plan" width="100%">
+  <img src="static/Haushaltsserver.png" alt="Original Haushaltsserver wordmark" width="520">
 </p>
 
-<h1 align="center">Haushaltsserver</h1>
-<p align="center">
-  <strong>A small, self-hosted household chore coordinator.</strong><br>
-  Weekly responsibilities, completion tracking, confirmations and reminders — built with Rust.
-</p>
-<p align="center">
-  <a href="#what-it-does">Features</a> ·
-  <a href="#preview">Preview</a> ·
-  <a href="#getting-started">Getting started</a> ·
-  <a href="docs/ARCHITECTURE.md">Architecture</a> ·
-  <a href="docs/SCREENSHOTS.md">Screenshots</a>
-</p>
+# Haushaltsserver
 
-> **Project status:** A personal/experimental project with legacy dependencies and household-specific configuration. This repository is **not a ready-to-deploy, security-audited service**. See [Before you deploy](#before-you-deploy).
+A cleaning plan I built for our three-person shared flat (WG). The app rotates kitchen, bathroom and hallway duties, visualises when a room was last cleaned and provides a way to record finished tasks.
 
-## The idea
+The **backend is written in Rust with Rocket**. The UI is a separate [Yew/WebAssembly frontend](https://github.com/niclasdoege/haushaltsplan-fuer-die-rwth-loewen-wg); this repository contains the backend and a compiled copy of the frontend.
 
-A shared flat works better when everybody knows whose turn it is. **Haushaltsserver** brings a weekly cleaning rota and its follow-up workflow together in a browser: assign chores, record completions, request confirmation and send email reminders.
+**[Try the frontend preview](https://niclasdoege.github.io/haushaltsplan-online-preview/)** · [Frontend source](https://github.com/niclasdoege/haushaltsplan-fuer-die-rwth-loewen-wg) · [Technical details](docs/ARCHITECTURE.md)
 
-The backend is a [Rocket](https://rocket.rs/)-based Rust service; the checked-in frontend is a prebuilt JavaScript/WebAssembly application.
+## The actual interface
 
-## What it does
+<img src="docs/screenshots/frontend-preview-2026-10.png" width="820" alt="Actual browser capture showing the dates, kitchen, bathroom and hallway columns, and the completion buttons on the current day">
 
-| | Capability | Implementation |
-| :-- | :-- | :-- |
-| 📅 | **Weekly chore rota** | Tracks kitchen, bathroom and hallway/entrance assignments across weeks. |
-| ✅ | **Completion history** | Stores dated task records and derives the last recorded cleaning dates. |
-| ✉️ | **Confirmation workflow** | Supports pending submissions and approval links sent by email. |
-| 🔔 | **Reminders** | A background service checks for overdue or unconfirmed chores and prepares notification emails. |
-| 🙋 | **Accounts and sign-in** | Rocket Auth with a local SQLite user database. |
-| 🏠 | **Local presence check** | Optional LAN device detection using `arp-scan`; tied to the original household setup. |
+*Captured from the [public frontend preview](https://niclasdoege.github.io/haushaltsplan-online-preview/) on 12 October 2026. This is the real Yew interface, with the preview's old demo records; it is not a connected backend. An [older mobile screenshot (January 2023)](https://github.com/niclasdoege/haushaltsplan-fuer-die-rwth-loewen-wg/blob/main/Screenshot.jpg) shows the date-based colour transition when recent cleaning entries exist.*
 
-Not all workflows are generic or configurable through the interface. In particular, the original household members, email settings, network addresses and some startup settings are specified in source files.
+There are two views on the main page:
 
-## Preview
+- **Daily room status:** a 14-day grid with one column each for kitchen, bathroom and hallway. Each room's colour is calculated from the cleaning dates in the recorded history: green after cleaning, gradually trending towards red.
+- **Weekly cleaning rota:** a 14-week table that rotates the three roommates between the three rooms.
 
-![Illustrative household dashboard concept](docs/assets/dashboard-preview.svg)
+For the current day, a resident can select their assigned room and confirm completion in a dialog. The server stores chore records and supports a separate confirmation workflow.
 
-*An **illustrative design mockup**, not a captured screenshot of the current WebAssembly frontend. It shows the concepts in this repository without exposing personal household records.*
+## Implementation
 
-The repository already contains [an existing image](static/Haushaltsserver.png) and [an earlier version](static/Haushaltsserver_old.png). To replace these with a verified, privacy-safe capture of the running application, see the [screenshot guide](docs/SCREENSHOTS.md).
+| Part | Code | Responsibility |
+| --- | --- | --- |
+| Frontend | [Yew repository](https://github.com/niclasdoege/haushaltsplan-fuer-die-rwth-loewen-wg) | Date grid, colour calculation, weekly rotation, completion dialog and HTTP requests |
+| HTTP server | [`src/main.rs`](src/main.rs) | Rocket routes, account handling, chore submissions and confirmation links |
+| Notification worker | [`src/notificationservice.rs`](src/notificationservice.rs) | Email confirmations and periodic reminders using Tera and SMTP |
+| Persistence | `sqlite.db`, `static/*.json`, `private/pending.json` | SQLite accounts; JSON-based chores and pending requests |
 
-## How it fits together
+The backend also exposes a LAN-presence check using `arp-scan`. The project was written for a particular household: names, email settings and network configuration are currently part of the source.
 
-```mermaid
-flowchart LR
-    B["Browser<br/>JS + WebAssembly"] --> R["Rust / Rocket<br/>routes & authentication"]
-    R --> S[("SQLite<br/>accounts")]
-    R --> J[("JSON files<br/>chore state")]
-    R --> P["Pending approvals<br/>and confirmation links"]
-    R --> N["Background<br/>notification service"]
-    P --> N
-    N --> E["SMTP email"]
-    R --> A["Local LAN scan<br/>(arp-scan)"]
+The [technical notes](docs/ARCHITECTURE.md) cover the data flow, routes and relevant files.
+
+## Running it locally
+
+This is a historical personal project, **not a turnkey deployment**. The code uses an older Rocket version and requires a nightly Rust feature. A build with today's toolchain has not been verified.
+
+```bash
+git clone https://github.com/niclasdoege/haushaltsserver.git
+cd haushaltsserver
 ```
 
-Read [Architecture & data flow](docs/ARCHITECTURE.md) for the actual file layout, HTTP routes and runtime assumptions.
+Before attempting to run it, adapt the hard-coded host in `Rocket.toml`, review the credentials and recipients in `src/notificationservice.rs`, and replace the Rocket secret key and household-specific configuration. The notification worker starts with the server: disable it for local experiments unless email has been safely configured.
 
-## Getting started
+The historical development command is:
 
-**Prerequisites:** Rust/Cargo, a Rust nightly toolchain for this historical codebase, and any system libraries needed by the native Rust dependencies. A Linux host is expected for the optional `arp-scan` feature.
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/niclasdoege/haushaltsserver.git
-   cd haushaltsserver
-   ```
-
-2. **Review the source and local configuration before launching.** In particular, change the hard-coded listen address in `Rocket.toml` to an interface your machine actually owns (e.g. `127.0.0.1` for local development), and review `src/notificationservice.rs`, the household-specific identities in `src/main.rs` and the Rocket secret-key setup.
-
-3. Install the toolchain and try the backend:
-
-   ```bash
-   rustup toolchain install nightly
-   cargo +nightly run
-   ```
-
-4. Open the configured Rocket address and port in your browser. The repository supplies prebuilt frontend assets in `static/`; no frontend rebuild step is documented here.
-
-**Important:** This is an older Rust/Rocket prototype. A recent nightly toolchain may require dependency or source migrations; a successful current build has **not** been verified. Startup also spawns the background reminder worker. Disable its launch during isolated development if SMTP is not configured or if you do not want notifications sent.
-
-### Project layout
-
-```text
-src/
-  main.rs                  Rocket routes, authentication and chore actions
-  notificationservice.rs   Email confirmations and scheduled reminders
-static/                    Prebuilt browser app (JS, WASM, CSS) and state files
-templates/                 Tera login, confirmation and email templates
-private/pending.json       Original pending-request state (tracked in Git)
-Cargo.toml                 Rust dependencies
-Rocket.toml                Local Rocket server configuration
-docs/                      Architecture, visuals and screenshot guidance
+```bash
+cargo +nightly run
 ```
 
-The code currently reads/writes `static/example.json`, `static/zustande.json`, and `private/pending.json`, and creates/opens a local SQLite database for accounts. Preserve the expected structure if you run it.
+The process expects `static/`, `templates/` and `private/` relative to the repository root. Use non-personal fixture data. See [the frontend repository](https://github.com/niclasdoege/haushaltsplan-fuer-die-rwth-loewen-wg) for the Yew source; the precompiled assets are already checked in here.
 
-## Before you deploy
-
-This repository was developed for a specific household, not hardened for public hosting.
-
-- **Keep it private to your LAN while evaluating.** Authentication, broad CORS behavior and confirmation URLs need a security review before internet exposure.
-- **Review and rotate secrets.** SMTP credentials, service URLs, device identifiers and the Rocket encryption key must be moved out of source code before real deployment. Never reuse credentials that were committed to Git.
-- **Treat checked-in JSON as sample/history, not live data.** Some tracked state may reflect a former household; replace it with non-personal fixtures for demos.
-- **Validate the build and workflows.** There is no verified current CI or automated setup path documented for this historical revision.
-
-See [Security & privacy notes](SECURITY.md) for the remediation checklist.
-
-## Documentation
-
-- [Architecture & data flow](docs/ARCHITECTURE.md)
-- [Creating genuine, privacy-safe screenshots](docs/SCREENSHOTS.md)
-- [Security & privacy notes](SECURITY.md)
-
-## Contributing and reuse
-
-Issues and PRs are welcome as proposals, but the repository does not currently contain a license file. **Public source code is not automatically an open-source license**; ask the owner for permission before reusing or redistributing it beyond the rights provided by law.
+**Deployment note:** This was made for a private WG. Review the CORS policy, route permissions and confirmation tokens, and rotate any exposed secrets before hosting it publicly. No license file is included.

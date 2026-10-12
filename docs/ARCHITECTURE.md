@@ -1,66 +1,51 @@
-# Architecture & data flow
+# How Haushaltsserver is built
 
-This is a description of what the checked-in code currently does, **not** a deployment blueprint or a claim that the project builds on modern toolchains.
+This project has two source repositories: the [Rocket backend](https://github.com/niclasdoege/haushaltsserver) and the [Yew frontend](https://github.com/niclasdoege/haushaltsplan-fuer-die-rwth-loewen-wg). The backend repo also contains a precompiled WebAssembly build in `static/`.
 
-## Components
-
-| Layer | Paths | Responsibility |
-| --- | --- | --- |
-| Browser | `static/index.html`, hashed `.js`, `.wasm` and `.css` files | Prebuilt WebAssembly/JavaScript UI for the chore plan. The frontend's source project is not included here. |
-| HTTP server | `src/main.rs` | Rocket routes, login/signup, task updates, pending confirmation handling and static file delivery. |
-| Accounts | `rocket_auth`, `sqlite.db` at runtime | User/session storage in SQLite. |
-| Task state | `static/example.json`, `static/zustande.json` | JSON-based completion records and last-done information. |
-| Pending workflow | `private/pending.json` | Pending confirmations and one-time-looking numeric keys. |
-| Notifications | `src/notificationservice.rs`, `templates/email/` | Tera-rendered email messages, SMTP delivery and periodic reminders. |
-| Presence | `GET /reach` | Checks configured LAN devices by invoking `sudo arp-scan`. |
-
-## High-level flow
+## Data flow
 
 ```mermaid
-sequenceDiagram
-    actor Resident
-    participant UI as Browser (WASM UI)
-    participant API as Rocket server
-    participant JSON as JSON state
-    participant Mail as Notification service
-    Resident->>UI: Mark or request a chore update
-    UI->>API: POST task / pending submission
-    API->>JSON: Persist the request or completion
-    API->>Mail: Prepare confirmation email (where applicable)
-    Mail-->>Resident: Email with confirmation link
-    Resident->>API: Open confirmation link
-    API->>JSON: Reconcile pending and accepted state
+flowchart LR
+  UI["Yew / WASM<br/>calendar"] -->|"HTTP + JSON"| API["Rocket"]
+  API --> DB[("SQLite<br/>accounts")]
+  API --> DATA[("JSON files<br/>chore state")]
+  API --> MAIL["Tera + SMTP<br/>notifications"]
+  MAIL --> LINK["Confirmation link"]
+  LINK --> API
 ```
 
-The background notification worker separately checks stored chore state on an interval.
+The browser calculates the daily colour grid and weekly rotation. It requests chore state from the server and submits completion records. Rocket handles authentication and a pending-confirmation flow; a background worker sends reminder and approval emails.
 
-## Selected HTTP endpoints
+## Important paths
 
-These are implementation details; they are **not** presented as a stable external API.
+| Path | Role |
+| --- | --- |
+| `src/main.rs` | HTTP routes, account handling, confirmation links and JSON writes |
+| `src/notificationservice.rs` | SMTP sending, pending approvals and periodic reminder checks |
+| `static/index.html` and hashed `static/*.{js,wasm,css}` | Compiled Yew frontend |
+| `static/example.json` | Recorded chores by week |
+| `static/zustande.json` | Derived last-cleaned dates |
+| `private/pending.json` | Pending requests and confirmation keys |
+| `templates/` | Tera pages and email templates |
+| `sqlite.db` | SQLite user database, created when running |
+
+## Selected routes
 
 | Route | Purpose |
 | --- | --- |
-| `GET /`, `GET /status` | Serve the prebuilt browser UI. |
-| `GET /login`, `POST /login`, `POST /signup`, `GET /logout` | Account flow via Rocket Auth. |
-| `GET /whichuser` | Map an authenticated account to configured household roles. |
-| `POST /tables` | Submit a task/completion record (requires a user). |
-| `POST /tables_pending` | Submit a pending chore action (requires a user). |
-| `GET /affirm_3L/<key>` | Confirmation by a generated link key. |
-| `GET /Excusemon/<key>`, `POST /post_excuse` | Excuse/response workflow. |
-| `GET /reach` | LAN presence check, host-dependent. |
+| `GET /`, `GET /status` | Return the frontend |
+| `GET /login`, `POST /login`, `POST /signup`, `GET /logout` | Authentication |
+| `GET /whichuser` | Map a signed-in user to a household role |
+| `POST /tables` | Submit a chore record |
+| `POST /tables_pending` | Start a pending approval |
+| `GET /affirm_3L/<key>` | Approve a record via a link |
+| `GET /Excusemon/<key>`, `POST /post_excuse` | Excuse/response process |
+| `GET /reach` | LAN device scan via `arp-scan` |
 
-## Local development gotchas
+These routes are application internals, not a documented stable API.
 
-1. `Rocket.toml` binds to a particular private-network address by default; change it before starting on a different machine.
-2. `main.rs` uses unstable Rust features; expect a nightly toolchain and potentially source/dependency updates.
-3. The browser app is a compiled artifact. Changes to the frontend require its **separate source/build pipeline**, which is not present in this repository.
-4. The server uses relative paths. Run from the repository root so it can find `static/`, `templates/` and `private/`.
-5. Account storage is SQLite, but chore and pending data are written into JSON files under version-controlled paths.
-6. Startup launches the notification worker. Do not run against real credentials or household data without checking what emails it can send.
-7. `arp-scan` assumes a local Linux-style networking setup and elevated execution rights; it will not work unmodified on every host.
+## Current limitations
 
-## Boundaries and future improvements
+Configuration still includes the original household's users, network, mail transport and server address. The frontend uses a hard-coded backend URL in its own source. The server uses older Rust dependencies, a nightly-only feature gate, JSON files for concurrent state and an email worker that starts automatically. A new deployment should isolate this configuration, use synthetic fixtures and receive a security review before exposure to the internet.
 
-If this is revived as an actively deployed app, useful next steps would be: environment-driven configuration; a separate example-data directory; secret and private-data cleanup; authentication/authorization review; structured persistence and migrations; frontend source/build documentation; reproducible CI; and real screenshots captured from sanitized fixtures.
-
-See [SECURITY.md](../SECURITY.md) before publishing a live demo.
+The [public frontend preview](https://niclasdoege.github.io/haushaltsplan-online-preview/) demonstrates the table-based UI, **not** a connected backend.
