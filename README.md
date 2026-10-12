@@ -12,9 +12,9 @@ The **backend is written in Rust with Rocket**. The UI is a separate [Yew/WebAss
 
 ## The actual interface
 
-<img src="https://raw.githubusercontent.com/niclasdoege/haushaltsplan-fuer-die-rwth-loewen-wg/main/Screenshot.jpg" height="520" alt="Original mobile screenshot of the cleaning calendar with date, kitchen, bathroom and hallway columns">
+<img src="docs/screenshots/frontend-preview-2026-10.png" width="820" alt="Actual browser capture showing the dates, kitchen, bathroom and hallway columns, and the completion buttons on the current day">
 
-*An actual mobile screenshot from January 2023, taken from the [frontend repository](https://github.com/niclasdoege/haushaltsplan-fuer-die-rwth-loewen-wg/blob/main/Screenshot.jpg). The public preview uses the same table-based concept; this is not a mockup or a screenshot of the current backend.*
+*Captured from the [public frontend preview](https://niclasdoege.github.io/haushaltsplan-online-preview/) on 12 October 2026. This is the real Yew interface, with the preview's old demo records; it is not a connected backend. An [older mobile screenshot (January 2023)](https://github.com/niclasdoege/haushaltsplan-fuer-die-rwth-loewen-wg/blob/main/Screenshot.jpg) shows the date-based colour transition when recent cleaning entries exist.*
 
 There are two views on the main page:
 
